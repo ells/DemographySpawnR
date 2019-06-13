@@ -44,11 +44,12 @@ mergedCensusState = merge(allStateData_noPR, censusNo2017, by = c("State", "Year
 mergedCensusState2 = mergedCensusState[, c(1,2,3,ncol(mergedCensusState), 5:ncol(mergedCensusState)-1)]
 
 
-calc = (mergedCensusState2$`New Diagnoses State Cases`/mergedCensusState2$pop*100000 - mergedCensusState2$`New Diagnoses State Rate`)/mergedCensusState2$`New Diagnoses State Rate`
+calc_rate = -100*(mergedCensusState2$`New Diagnoses State Cases`/mergedCensusState2$pop*100000 - mergedCensusState2$`New Diagnoses State Rate`)/mergedCensusState2$`New Diagnoses State Rate`
 # mean(calc) ~ 17% difference between calculated and actual
 
-plot(density(calc))
+plot(density(calc_rate), main = "", xlab = "% Difference")
 
 # pretty normally distributed
+## Calculated rate is, on average, 17% different from given rate
 
-## Calculated rate of [new diagnoses] / population are ~ 17 
+
