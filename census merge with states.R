@@ -32,7 +32,7 @@ try = censusStateLevel %>%
   summarise(pop=sum(TOT_POP))
 
 censusNo2017 = try[try$Year != 2017,]
-censusNo2017$State = ifelse(censusNo2017$State == "District of Columbia","Washington, D.C.", censusNo2017$State)
+censusNo2017$State = ifelse(censusNo2017$State == "District of Columbia", "Washington, D.C.", censusNo2017$State)
 
 ## At this point, census data is population in each 2010 - 2017 for each state 
 ## State data from AIDS Vu has Puerto Rico, census doesn't, so we remove it 
