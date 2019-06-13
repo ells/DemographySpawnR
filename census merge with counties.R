@@ -148,13 +148,13 @@
   
   patients <- tibble( 
     `Sex` = sample(c("Male", "Female"), n, TRUE, 
-                   prob = c(males/pop, females/pop)
+                   prob = c(males, females)
                    ),
     `Race/Ethnicity` = sample(c("White", "Black", "Asian",
                                 "Hispanic/Latin", "American Indian/Alaska Native",
                                 "Native American/Pacific Islander", "Multiple"), n, TRUE,
-                              prob = c(whites/pop, blacks/pop, asians/pop, hisps/pop,
-                                       ias/pop, nas/pop, mults/pop)
+                              prob = c(whites, blacks, asians, hisps,
+                                       ias, nas, mults)
                               ),
     `Age Category` = sample(c("<24", "25-34", "35-44", "45-54", "55+"), n, TRUE,
                             prob = c(rep(0.2, 5))
