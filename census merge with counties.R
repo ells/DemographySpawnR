@@ -6,7 +6,7 @@
   library(readxl)
   library(expss)
   library(tibble)
-  ### hello
+
   
 
   ## Reading in county level data
@@ -164,7 +164,8 @@
                     )
      )
   
-  #ummm now what?
+  #
   
+  ## 
   
   
