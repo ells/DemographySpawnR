@@ -19,19 +19,28 @@ census = fread("/Users/ishaandave/Desktop/CDC-Leidos/Data/Census/cc-est2017-alld
 # First 3 columns are useless
 census2 = census[census$YEAR>2, c(-1, -2, -3)]
 
-censusStateLevel = subset(census2, AGEGRP == 0)
+census2$YEAR_new = census2$YEAR + 2007
 
-censusStateLevel$YEAR_new = censusStateLevel$YEAR + 2007
-
-names(censusStateLevel)[names(censusStateLevel) == "YEAR_new"] = "Year"
-names(censusStateLevel)[names(censusStateLevel) == "STNAME"] = "State"
+names(census2)[names(census2) == "YEAR_new"] = "Year"
+names(census2)[names(census2) == "STNAME"] = "State"
 
 
-try = censusStateLevel %>% 
+census2$adjPop = ifelse(census2$AGEGRP == 3, 
+                                 0.2*census2$TOT_POP, 
+                                    census2$TOT_POP)
+
+censusAgeSub = subset(census2, (AGEGRP>2))
+
+censusAgeSub2 = censusAgeSub %>% 
+  group_by(State, CTYNAME, Year) %>%
+  summarise(pop=round(sum(adjPop)))
+
+censusAgeSub3 = censusAgeSub2 %>% 
   group_by(State, Year) %>%
-  summarise(pop=sum(TOT_POP))
+  summarise(pop = round(sum(pop)))
 
-censusNo2017 = try[try$Year != 2017,]
+
+censusNo2017 = censusAgeSub3[censusAgeSub3$Year != 2017,]
 censusNo2017$State = ifelse(censusNo2017$State == "District of Columbia", "Washington, D.C.", censusNo2017$State)
 
 ## At this point, census data is population in each 2010 - 2017 for each state 
@@ -44,10 +53,10 @@ mergedCensusState = merge(allStateData_noPR, censusNo2017, by = c("State", "Year
 mergedCensusState2 = mergedCensusState[, c(1,2,3,ncol(mergedCensusState), 5:ncol(mergedCensusState)-1)]
 
 
-calc_rate = -100*(mergedCensusState2$`New Diagnoses State Cases`/mergedCensusState2$pop*100000 - mergedCensusState2$`New Diagnoses State Rate`)/mergedCensusState2$`New Diagnoses State Rate`
+error = -100*(mergedCensusState2$`New Diagnoses State Cases`/mergedCensusState2$pop*100000 - mergedCensusState2$`New Diagnoses State Rate`)/mergedCensusState2$`New Diagnoses State Rate`
 # mean(calc) ~ 17% difference between calculated and actual
 
-plot(density(calc_rate), main = "", xlab = "% Difference")
+plot(density(error), main = "", xlab = "% Difference")
 
 # pretty normally distributed
 ## Calculated rate is, on average, 17% different from given rate
