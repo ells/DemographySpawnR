@@ -26,7 +26,7 @@ names(census2)[names(census2) == "STNAME"] = "State"
 
 
 census2$adjPop = ifelse(census2$AGEGRP == 3, 
-                                 0.2*census2$TOT_POP, 
+                                 0.25*census2$TOT_POP, 
                                     census2$TOT_POP)
 
 censusAgeSub = subset(census2, (AGEGRP>2))
