@@ -49,6 +49,23 @@ c(mean(patients$Age), var(patients$Age))
 
 
 
+## Jk pretend we have no clue what data looks like
+## loop through all the variables and give counts/percentages or mean/sd for each one
+# Idk how to go about doing that but here we go
+
+
+
+set.seed(3221)  # this makes the example exactly reproducible
+my.data <- data.frame(y=rnorm(5), 
+                      x1=c(1:5), 
+                      x2=c(TRUE, TRUE, FALSE, FALSE, FALSE),
+                      X3=letters[1:5])
+
+a = data.frame(lapply(my.data, class)); a
+for (i in 1:ncol(dat)){
+  a = data.frame(lapply(my.data, class)); a
+}
+
 
 
 
