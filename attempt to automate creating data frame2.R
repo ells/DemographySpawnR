@@ -37,4 +37,5 @@ head(patients)
 table(patients$Gender)
 table(patients$`Race/Ethnicity`)
 table(patients$`Education Categorical`)
+
 c(mean(patients$Age), var(patients$Age))
