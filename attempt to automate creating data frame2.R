@@ -3,8 +3,6 @@ library(readxl)
 dat = read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.xlsx")
 
 names(dat)<- tolower(names(dat))
-# dat$sex = sample(c("M", "F", "O"), 30, prob = c(0.333, 0.333, 0.333), replace = T)
-# dat$education = sample(c(1:8), 30, T)
 
 gender = dat[, grepl("gender|sex", names(dat))]; gender
 ## pick whatever 
