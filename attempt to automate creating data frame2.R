@@ -5,7 +5,7 @@ dat = read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demog
 names(dat)<- tolower(names(dat))
 
 gender = dat[, grepl("gender|sex", names(dat))]; gender
-## pick whatever 
+ 
 ageVALUE = dat[, grepl("age", names(dat))]; ageVALUE
 
 raceVALUE = dat[, grepl("race", names(dat))]; raceVALUE
