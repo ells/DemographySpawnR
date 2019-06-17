@@ -12,9 +12,9 @@ names(dat)<- tolower(names(dat))
 
 gender = dat[, grepl("gender|sex", names(dat))]; gender
  
-ageVALUE = dat[, grepl("age", names(dat))]; ageVALUE
+age = dat[, grepl("age", names(dat))]; age
 
-raceVALUE = dat[, grepl("race", names(dat))]; raceVALUE
+race = dat[, grepl("race", names(dat))]; race
 
 edu = dat[, grepl("edu", names(dat))]; edu
 # 
@@ -24,13 +24,14 @@ edu = dat[, grepl("edu", names(dat))]; edu
 n = 1000
 set.seed(1234)
 patients <- tibble( 
+  
   `Gender`                = sample(c(as.character(as.data.frame(table(gender))$gender)), n, TRUE, 
                              prob = c(as.data.frame(table(gender))$Freq)
                                   ),
-  `Race/Ethnicity`        = sample(c(as.character(as.data.frame(table(raceVALUE))$raceVALUE)), n, TRUE,
-                              prob = c(as.data.frame(table(raceVALUE))$Freq)
+  `Race/Ethnicity`        = sample(c(as.character(as.data.frame(table(race))$race)), n, TRUE,
+                              prob = c(as.data.frame(table(race))$Freq)
                                   ),
-  `Age`                   = round(rnorm(n, mean(ageVALUE), sd = sqrt(var(ageVALUE)))
+  `Age`                   = round(rnorm(n, mean(age), sd = sqrt(var(age)))
                                   ),
   `Education Categorical` = sample(c(as.character(as.data.frame(table(edu))$edu)), n, TRUE,
                                    prob = c(as.data.frame(table(edu))$Freq)
