@@ -19,7 +19,7 @@ race = dat[, grepl("race", names(dat))]; race
 edu = dat[, grepl("edu", names(dat))]; edu
 # 
 # hisp = dat[, grepl("hisp", names(dat))]; hisp 
-# 
+# Easy to add more depending on what variable we have 
 
 n = 1000
 set.seed(1234)
