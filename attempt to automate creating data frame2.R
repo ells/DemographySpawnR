@@ -1,12 +1,10 @@
 library(readxl)
-library(tableone)
+library(data.table)
+library(tidyverse)
 
-library(officer)
-library(magrittr)
-devtools::install_version("ReporteRs", version = "0.8.10", repos = "http://cran.r-project.org")
 
 # dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/mess around.csv")
-dat = read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.xlsx")
+dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.csv")
 
 names(dat)<- tolower(names(dat))
 
@@ -17,8 +15,8 @@ ageVALUE = dat[, grepl("age", names(dat))]; ageVALUE
 raceVALUE = dat[, grepl("race", names(dat))]; raceVALUE
 
 edu = dat[, grepl("edu", names(dat))]; edu
-hisp = dat[, grepl("hisp", names(dat))]; hisp 
 
+hisp = dat[, grepl("hisp", names(dat))]; hisp 
 
 
 n = 1000
@@ -46,6 +44,32 @@ table(patients$`Education Categorical`)
 
 c(mean(patients$Age), var(patients$Age))
 
-listVars <- c("Age", "Gender", "Race/Ethnicity", "Education Categorical", "Education Continuous")
-catVars = c("Gender", "Race/Ethnicity", "Education Categorical")
-table1 =  CreateTableOne(vars = listVars, data = patients, factorVars = catVars)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 
+# listVars <- c("Age", "Gender", "Race/Ethnicity", "Education Categorical", "Education Continuous")
+# catVars = c("Gender", "Race/Ethnicity", "Education Categorical")
+# table1 =  CreateTableOne(vars = listVars, data = patients, factorVars = catVars)
+# 
+# # Create a temp file
+# tmp <- tempfile(fileext = ".docx")
+# 
+# # Create a docx file
+# read_docx() %>% 
+#   body_add_flextable(table1) %>% 
+#   print(target = tmp)
+# 
+# 
