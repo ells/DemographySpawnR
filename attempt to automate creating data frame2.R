@@ -5,6 +5,7 @@ library(tidyverse)
 
 # dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/mess around.csv")
 dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.csv")
+dat = as.data.frame(read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.xlsx"))
 
 names(dat)<- tolower(names(dat))
 
