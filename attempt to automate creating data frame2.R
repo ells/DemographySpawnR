@@ -5,7 +5,8 @@ library(tidyverse)
 
 # dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/mess around.csv")
 dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.csv")
-dat = as.data.frame(read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.xlsx"))
+# dat = as.data.frame(read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.xlsx"))
+names(dat)
 
 names(dat)<- tolower(names(dat))
 
@@ -16,9 +17,9 @@ ageVALUE = dat[, grepl("age", names(dat))]; ageVALUE
 raceVALUE = dat[, grepl("race", names(dat))]; raceVALUE
 
 edu = dat[, grepl("edu", names(dat))]; edu
-
-hisp = dat[, grepl("hisp", names(dat))]; hisp 
-
+# 
+# hisp = dat[, grepl("hisp", names(dat))]; hisp 
+# 
 
 n = 1000
 set.seed(1234)
