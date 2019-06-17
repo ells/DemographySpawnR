@@ -1,4 +1,10 @@
 library(readxl)
+library(tableone)
+
+library(officer)
+library(magrittr)
+devtools::install_version("ReporteRs", version = "0.8.10", repos = "http://cran.r-project.org")
+
 # dat = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/mess around.csv")
 dat = read_xlsx("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/pretend demographics.xlsx")
 
@@ -39,3 +45,7 @@ table(patients$`Race/Ethnicity`)
 table(patients$`Education Categorical`)
 
 c(mean(patients$Age), var(patients$Age))
+
+listVars <- c("Age", "Gender", "Race/Ethnicity", "Education Categorical", "Education Continuous")
+catVars = c("Gender", "Race/Ethnicity", "Education Categorical")
+table1 =  CreateTableOne(vars = listVars, data = patients, factorVars = catVars)
