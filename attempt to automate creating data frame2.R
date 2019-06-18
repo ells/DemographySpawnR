@@ -83,21 +83,60 @@ choices$var = colnames(dat)
 # somehow need to populate a data frame and simulate accordingly 
 
 
-simData <- data.frame(matrix(ncol = ncol(dat), nrow = n))
-colnames(simData) <- paste0("var", c(1:ncol(dat)))
 
-n = 25
-for (i in 1:ncol(dat))
-  {
+
+
+
+
+
+
+nodedata = read.csv("/Users/ishaandave/Desktop/CDC-Leidos/Data/Pretend/Demo_outbreak_NodeList.csv")
+
+n = 100
+dataProcessing = function (data) {
   
-  if (choices$nLevels[i] < 5){
-    simData[,i] = sample(c(as.character(as.data.frame(table(dat[,i]))$Var1)), n, TRUE, 
-                         prob = c(as.data.frame(table(dat[,i]))$Freq)
+# getting variable names and number of unique levels in each of them
+levelsEachVariable = data.frame(nLevels = double(),
+                     var = character())
+
+for (i in 1:ncol(data)){
+  levelsEachVariable[i,1] = length(unique(data[,i]))
+}
+
+levelsEachVariable$var = colnames(data)
+
+
+
+simData <- data.frame(matrix(ncol = ncol(data), nrow = n))
+colnames(simData) <- paste0("var", c(1:ncol(data)))
+
+
+## getting distribution of each variable and randomly sampling from that to get new dataset
+
+for (i in 1:ncol(data))
+  {
+  set.seed(1234)
+  if (length(unique(data[,i])) < 5){
+    simData[,i] = sample(c(as.character(as.data.frame(table(data[,i]))$Var1)), n, TRUE, 
+                         prob = c(as.data.frame(table(data[,i]))$Freq)
                         ) 
                               } 
   else  {
-    simData[,i] = round(rnorm(n, mean = mean(dat[,i]), sd = sqrt(var(dat[,i])) )
+    simData[,i] = round(rnorm(n, mean = mean(data[,i]), sd = sqrt(var(data[,i])) )
                         )
-        }
-  
   }
+  names(simData) = names(data)
+  
+  } #close for loop
+  View(simData)
+  return(data.frame(simData))
+}
+
+dataProcessing(nodedata)
+
+# download devtools
+
+install.packages("devtools", repos='http://cran.rstudio.com/', dependencies = T)
+
+# check of the table is < "10" if 
+# yagni 
