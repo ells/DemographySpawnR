@@ -83,4 +83,21 @@ choices$var = colnames(dat)
 # somehow need to populate a data frame and simulate accordingly 
 
 
+simData <- data.frame(matrix(ncol = ncol(dat), nrow = n))
+colnames(simData) <- paste0("var", c(1:ncol(dat)))
 
+n = 25
+for (i in 1:ncol(dat))
+  {
+  
+  if (choices$nLevels[i] < 5){
+    simData[,i] = sample(c(as.character(as.data.frame(table(dat[,i]))$Var1)), n, TRUE, 
+                         prob = c(as.data.frame(table(dat[,i]))$Freq)
+                        ) 
+                              } 
+  else  {
+    simData[,i] = round(rnorm(n, mean = mean(dat[,i]), sd = sqrt(var(dat[,i])) )
+                        )
+        }
+  
+  }
