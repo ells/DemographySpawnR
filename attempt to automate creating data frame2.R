@@ -77,29 +77,10 @@ choices = data.frame(nLevels = double(),
 
 choices$var = colnames(dat)
 
+# if nLevels of the variable < #, then do freq/percentages
+  # need to check if factor/character, numeric 
+# if nLevels of variable >= #, then sample from ~ N(mean, SD)
+# somehow need to populate a data frame and simulate accordingly 
 
 
 
-
-
-
-
-
-
-
-
-
-# 
-# listVars <- c("Age", "Gender", "Race/Ethnicity", "Education Categorical", "Education Continuous")
-# catVars = c("Gender", "Race/Ethnicity", "Education Categorical")
-# table1 =  CreateTableOne(vars = listVars, data = patients, factorVars = catVars)
-# 
-# # Create a temp file
-# tmp <- tempfile(fileext = ".docx")
-# 
-# # Create a docx file
-# read_docx() %>% 
-#   body_add_flextable(table1) %>% 
-#   print(target = tmp)
-# 
-# 
