@@ -136,7 +136,5 @@ dataProcessing(nodedata)
 
 # download devtools
 
-install.packages("devtools", repos='http://cran.rstudio.com/', dependencies = T)
-
 # check of the table is < "10" if 
 # yagni 
