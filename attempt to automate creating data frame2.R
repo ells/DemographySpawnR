@@ -62,10 +62,20 @@ my.data <- data.frame(y=rnorm(5),
                       X3=letters[1:5])
 
 a = data.frame(lapply(my.data, class)); a
-for (i in 1:ncol(dat)){
-  a = data.frame(lapply(my.data, class)); a
+
+
+
+
+
+
+choices = data.frame(nLevels = double(),
+                     var = character())
+
+ for (i in 1:ncol(dat)){
+  choices[i,1] = length(unique(dat[,i]))
 }
 
+choices$var = colnames(dat)
 
 
 
