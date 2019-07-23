@@ -1,6 +1,7 @@
 Package: DemographySpawnR
 Type: Package
 Title: Simulate A New Dataset Based on Distribution of a Given Dataset
+URL: https://cdcgov.github.io/DemographySpawnR/
 Version: 0.1.0
 Authors@R: as.person(c(
     "Ishaan Dave <yhd8@cdc.gov> [aut]",
@@ -25,3 +26,4 @@ Imports:
     dplyr,
     plyr,
     fitdistrplus
+BugReports: https://github.com/CDCgov/DemographySpawnR/issues
