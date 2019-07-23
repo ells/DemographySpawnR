@@ -23,14 +23,14 @@ census2 = census[census$YEAR>2, c(-1, -2, -3)]
 
 attach(census2)
 census2$AGECAT = ifelse(AGEGRP == 0, 0,
-                  ifelse(AGEGRP > 0 & AGEGRP <= 5, 1, 
-                   ifelse(AGEGRP == 6 | AGEGRP == 7, 2,
-                    ifelse(AGEGRP == 8 | AGEGRP == 9, 3,
-                     ifelse(AGEGRP == 10 | AGEGRP == 11, 4, 55)
-                          )
-                         )
+                        ifelse(AGEGRP > 0 & AGEGRP <= 5, 1, 
+                               ifelse(AGEGRP == 6 | AGEGRP == 7, 2,
+                                      ifelse(AGEGRP == 8 | AGEGRP == 9, 3,
+                                             ifelse(AGEGRP == 10 | AGEGRP == 11, 4, 55)
+                                      )
+                               )
                         )
-                       )
+)
 
 census2$YEAR_new = census2$YEAR + 2007
 
@@ -83,33 +83,33 @@ dat = allData_reorder[, -c(9, (25:34))]
 ##############################################################################
 
 SUBSET_OF_WHATEVER_GROUP = dat[dat$STNAME == "XXXXX" & dat$Year == XXXX,]
-  TOT_HISP =  H_MALE +  H_FEMALE
-  TOT_NONHISP =   NH_MALE +   NH_FEMALE
+TOT_HISP =  H_MALE +  H_FEMALE
+TOT_NONHISP =   NH_MALE +   NH_FEMALE
 
 # "White", "Hispanic/Latinx", 
 # "Black", "American Indian/Alaska Native", 
 # "Asian", "Pacific Islander", "Multiple"
 
 ## GEtting total white population
-  TOT_WHITE =   WA_MALE +   WA_FEMALE
+TOT_WHITE =   WA_MALE +   WA_FEMALE
 
 ## GEtting total black population
-  TOT_BLACK =   BA_MALE +   BA_FEMALE
+TOT_BLACK =   BA_MALE +   BA_FEMALE
 
 # Asian Population
-  TOT_ASIAN =   AA_MALE +   AA_FEMALE
+TOT_ASIAN =   AA_MALE +   AA_FEMALE
 
 # Hispanic/Non-hispanic
-  TOT_HISP =   H_MALE +   H_FEMALE
-  TOT_NONHISP =   NH_MALE +   NH_FEMALE
+TOT_HISP =   H_MALE +   H_FEMALE
+TOT_NONHISP =   NH_MALE +   NH_FEMALE
 
 # American Indian / Alaska Native
-  TOT_IA =   IA_MALE +   IA_FEMALE
+TOT_IA =   IA_MALE +   IA_FEMALE
 
 # Native American
-  TOT_NA =   NA_MALE +   NA_FEMALE
+TOT_NA =   NA_MALE +   NA_FEMALE
 
-  TOT_MULT =   TOM_MALE +   TOM_FEMALE
+TOT_MULT =   TOM_MALE +   TOM_FEMALE
 
 females = with(ny2015, sum_col_if("Total", ageCategory, data = TOT_FEMALE ))
 males = with(ny2015, sum_col_if("Total", ageCategory, data = TOT_MALE ))

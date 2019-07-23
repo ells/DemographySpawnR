@@ -1,4 +1,3 @@
-
 library(plyr)
 library(dplyr)
 library(tidyverse)
@@ -26,8 +25,8 @@ names(census2)[names(census2) == "STNAME"] = "State"
 
 
 census2$adjPop = ifelse(census2$AGEGRP == 3, 
-                                 0.25*census2$TOT_POP, 
-                                    census2$TOT_POP)
+                        0.2*census2$TOT_POP, 
+                        census2$TOT_POP)
 
 censusAgeSub = subset(census2, (AGEGRP>2))
 
@@ -60,5 +59,3 @@ plot(density(error), main = "", xlab = "% Difference")
 
 # pretty normally distributed
 ## Calculated rate is, on average, 17% different from given rate
-
-
