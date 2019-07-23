@@ -78,26 +78,30 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
     } else if (any(na.omit(inputData[,i]) %% 1 == 0)) {
 
 
-      fitNormal  <- fitdist(inputData[,i], "norm", method = "mme")
-      fitGamma   <- fitdist(inputData[,i], "gamma", method = "mme")
+      fitNormal  <- fitdist(c(na.omit(inputData[,i])), "norm", method = "mle")
+      #fitGamma   <- fitdist(c(na.omit(inputData[,i])), "gamma", method = "mle")
       # fitLogNorm <- fitdist(abs(inputData[,i]), "lnorm", method = "mme")
       # fitWeibull <- fitdist(inputData[,i], "weibull", method = "mge")
 
 
-      listFits = list(fitNormal, fitGamma)#, fitWeibull)
+      # listFits = list(fitNormal, fitGamma)#, fitWeibull)
+      # 
+      # fits = gofstat(listFits, fitnames=c("norm", "gamma"))#, "weibull"))
 
-      fits = gofstat(listFits, fitnames=c("norm", "gamma"))#, "weibull"))
-
-      simData[,i] = round(eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
-                                   listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
-                                   listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')'))))
+      # simData[,i] = round(eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
+      #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
+      #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')'))))
+      
+      simData[,i] = round(rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
 
     } else {
 
-      simData[,i] = eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
-                                   listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
-                                   listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')')))
-    }
+      # simData[,i] = eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
+      #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
+      #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')')))
+      simData[,i] = (rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
+      
+          }
 
   } #close big for loop (1)
 
