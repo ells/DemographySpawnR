@@ -72,7 +72,7 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
       else if (length(unique(inputData[,i])) < 7 | all(is.factor(inputData[,i]))) {
 
           simData[,i] = sample(c(as.character(as.data.frame(table(inputData[,i], exclude = NULL))$Var1)), n, TRUE,
-                               prob = c(as.data.frame(table(inputData[,i]))$Freq)
+                               prob = c(as.data.frame(table(inputData[,i], exclude = NULL))$Freq)
                               )
 
     } else if (any(na.omit(inputData[,i]) %% 1 == 0)) {
