@@ -7,10 +7,10 @@
 categoricalPvals(inputData)
 }
 \arguments{
-\item{inputData}{"true" dataset that you want to sample from}
+\item{inputData}{Dataset that you want to sample from}
 }
 \value{
-associations p-values for each pair of categorical variables
+associations and p-values for each pair of categorical variables
 }
 \description{
 This gives associations (Chi-square values) and p values of all pairwise comparisons of categorical variables
