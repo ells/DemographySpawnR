@@ -7,14 +7,15 @@
 continuousPvals(inputData)
 }
 \arguments{
-\item{inputData}{"true" dataset that you want to sample from}
+\item{inputData}{Dataset that you want to sample from}
 }
 \value{
-correlations p-values for each pair of continuous variables
+correlations and p-values for each pair of continuous variables
 }
 \description{
-This gives correlations and p values of all pairwise comparisons of continuous variables
-User can input any dataset, and this will return only associations between continuous variables
+Comparing all combinations of continuous variables.
+User can input any dataset, and this will return Pearson correlations, 95% CI, and p-value for each pair of
+continuous variables
 }
 \examples{
 continuousPvals()
