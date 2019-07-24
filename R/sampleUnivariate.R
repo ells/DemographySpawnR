@@ -45,21 +45,22 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
     #
     # }
 
-     if (any(sapply(inputData, function(x) !all(is.na(as.Date(as.character(x), format= dateFormat)))))) {
+     if (any(sapply(inputData[,i], function(x) !all(is.na(as.Date(as.character(x), format= dateFormat)))))) {
                    # & nchar(inputData[min(which(!is.na(inputData[,i]))), i]) == 8) {
 
-          possibleDates = which(sapply(inputData,
+          possibleDateColumns = which(sapply(inputData[,i],
                                        function(x)
                                          !all(is.na(as.Date(as.character(x),
-                                         format="%m/%d/%Y")))))
+                                         format=dateFormat)))))
 
-          dateFormatted2 = as.Date(as.character(inputData[, as.numeric(c(unname(possibleDates)))],
-                                                format = dateFormat))
+          dateFormatted = data.frame(inputData[, names(possibleDateColumns)])
+          
+          dateFormatted2 = as.Date(dateFormatted, format = dateFormat)
+          
+          sampledDates = sample(seq(min(dateFormatted2, na.rm = T),
+                              max(dateFormatted2, na.rm = T), by ="day"), n)
 
-          dates3 = sample(seq(min(!is.na(dateFormatted2), na.rm = T),
-                          max(dateFormatted2, na.rm = T), by ="day"), n)
-
-          simData[,i] = dates3
+          simData[,i] = sampledDates
 
 
       } else if (all(is.na(inputData[,i])) |
