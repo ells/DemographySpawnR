@@ -8,7 +8,8 @@
 #'
 #' @param inputData dataset that you want to sample from
 #' @param n number of rows in output/simulated dataset
-#' @param dateFormat format of the date variable (if one exists) in the original dataset. Default is "YYYYMMDD."
+#' @param dateFormat format of the date variable(s) (if one exists) in the original dataset. Default is "YYYYMMDD."
+#'     A set of formats can be input with c().
 #'
 #' @return A dataset with n rows that is distributionally similar to input dataset.
 #'
@@ -55,7 +56,7 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
           dateFormatted2 = as.Date(as.character(inputData[, as.numeric(c(unname(possibleDates)))],
                                                 format = dateFormat))
 
-          dates3 = sample(seq(min(dateFormatted2, na.rm = T),
+          dates3 = sample(seq(min(!is.na(dateFormatted2), na.rm = T),
                           max(dateFormatted2, na.rm = T), by ="day"), n)
 
           simData[,i] = dates3
