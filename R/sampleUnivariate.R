@@ -63,16 +63,17 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
        for (k in c(unname(possibleDates))) {
          
       
-         simData[, k] = sample(seq(min(as_date(as.POSIXct(inputData[, k], tz = "America/New_York", 
-                                                                          format = dateFormat)), 
+         simData[, k] = sample(seq(min(as_date(as.POSIXct(as.character(inputData[, k]), tz = "America/New_York", 
+                                                                          tryFormats = dateFormat)), 
                                                                         na.rm = T),
-                                   max(as_date(as.POSIXct(inputData[, k], tz = "America/New_York",
-                                                                          format = dateFormat)),
+                                   max(as_date(as.POSIXct(as.character(inputData[, k]), tz = "America/New_York",
+                                                                          tryFormats = dateFormat)),
                                                                         na.rm = T), 
                                    by ="day"), n)
          
          names(simData)[k] = names(inputData)[k]
        }
+       
 
       } else if (all(is.na(inputData[,i])) |
            (all(is.character(inputData[,i])) & length(unique(inputData[,i])) == nrow(inputData))) next
