@@ -45,23 +45,34 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
     #
     # }
 
-     if (any(sapply(inputData[,i], function(x) !all(is.na(as.Date(as.character(x), format= dateFormat)))))) {
+     if (any(sapply(inputData[,i],
+                    function(x)
+                      !all(is.na(as_date(as.character(x),
+                                         format=dateFormat, tz = "America/New_York")))))) {
                    # & nchar(inputData[min(which(!is.na(inputData[,i]))), i]) == 8) {
 
-          possibleDateColumns = which(sapply(inputData[,i],
-                                       function(x)
-                                         !all(is.na(as.Date(as.character(x),
-                                         format=dateFormat)))))
+       possibleDates = which(sapply(inputData[,i],
+                                    function(x)
+                                      !all(is.na(as_date(as.character(x),
+                                                         format=dateFormat, tz = "America/New_York")))))
+       
+       possibleDates
 
-          dateFormatted = data.frame(inputData[, names(possibleDateColumns)])
+         
           
-          dateFormatted2 = as.Date(dateFormatted, format = dateFormat)
-          
-          sampledDates = sample(seq(min(dateFormatted2, na.rm = T),
-                              max(dateFormatted2, na.rm = T), by ="day"), n)
-
-          simData[,i] = sampledDates
-
+       for (k in c(unname(possibleDates))) {
+         
+      
+         simData[, k] = sample(seq(min(as_date(as.POSIXct(inputData[, k], tz = "America/New_York", 
+                                                                          format = dateFormat)), 
+                                                                        na.rm = T),
+                                   max(as_date(as.POSIXct(inputData[, k], tz = "America/New_York",
+                                                                          format = dateFormat)),
+                                                                        na.rm = T), 
+                                   by ="day"), n)
+         
+         names(simData)[k] = names(inputData)[k]
+       }
 
       } else if (all(is.na(inputData[,i])) |
            (all(is.character(inputData[,i])) & length(unique(inputData[,i])) == nrow(inputData))) next
