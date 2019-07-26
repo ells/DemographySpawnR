@@ -110,8 +110,7 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
       simData[, i] = t(unname(data.frame(lapply(simData[,i], function(cc) cc[sample(c(NA, TRUE), prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
                                                                                        size = 1, replace = TRUE)]))))
 
-      
-      
+    
     } else {
 
       # simData[,i] = eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
@@ -138,8 +137,8 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
   } ## Close for loop (2)
 
    names(simData) = names(inputData)
-   
-   return(data.frame(simData))
 
-}
+   return(data.frame(simData))
+   
+   }
 
