@@ -107,37 +107,28 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')'))))
       
       simData[, i] = round(rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
-      simData[, i] = t(unname(data.frame(lapply(simData[,i], function(cc) cc[sample(c(NA, TRUE), prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
-                                                                                       size = 1, replace = TRUE)]))))
-
-    
+      simData[, i] = t(unname(data.frame(lapply(simData[, i], 
+                                                           function(cc) cc[sample(c(NA, TRUE), 
+                                                                              prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
+                                                                                 size = 1, replace = TRUE)]))))
+   
     } else {
 
       # simData[,i] = eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')')))
       simData[,i] = (rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
-      
+      simData[, i] = t(unname(data.frame(lapply(simData[, i], 
+                                                function(cc) cc[sample(c(NA, TRUE), 
+                                                                       prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
+                                                                       size = 1, replace = TRUE)]))))
           }
 
   } #close big for loop (1)
 
 
-  for (j in 1:nrow(inputData)) { # (2)
-
-    if (is.na(inputData[j, i])) {
-
-          simData[c(which(is.na(inputData[,i]))), i] = NA
-
-    }  else if (inputData[j, i]== "")  {
-
-          simData[c(which(inputData[,i] == "")), i] = ""
-    }
-
-  } ## Close for loop (2)
-
    names(simData) = names(inputData)
-
+  print(c(sum(is.na(simData[,1])), sum(is.na(simData[,4]))))
    return(data.frame(simData))
    
    }
