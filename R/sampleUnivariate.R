@@ -92,7 +92,7 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
     } else if (any(na.omit(inputData[,i]) %% 1 == 0)) {
 
 
-      fitNormal  <- fitdist(c(na.omit(inputData[,i])), "norm", method = "mle")
+      # fitNormal  <- fitdist(c(na.omit(inputData[,i])), "norm", method = "mle")
       #fitGamma   <- fitdist(c(na.omit(inputData[,i])), "gamma", method = "mle")
       # fitLogNorm <- fitdist(abs(inputData[,i]), "lnorm", method = "mme")
       # fitWeibull <- fitdist(inputData[,i], "weibull", method = "mge")
@@ -106,8 +106,12 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')'))))
       
-      simData[,i] = round(rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
+      simData[, i] = round(rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
+      simData[, i] = t(unname(data.frame(lapply(simData[,i], function(cc) cc[sample(c(NA, TRUE), prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
+                                                                                       size = 1, replace = TRUE)]))))
 
+      
+      
     } else {
 
       # simData[,i] = eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
