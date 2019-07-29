@@ -63,10 +63,10 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
        for (k in c(unname(possibleDates))) {
          
       
-         simData[, k] = sample(seq(min(as_date(as.POSIXct(as.character(inputData[, k]), tz = "America/New_York", 
+         simData[, k] = sample(seq(min(as_date(as.POSIXct(as.character(as.data.frame(inputData)[, k]), tz = "America/New_York", 
                                                                           tryFormats = dateFormat)), 
                                                                         na.rm = T),
-                                   max(as_date(as.POSIXct(as.character(inputData[, k]), tz = "America/New_York",
+                                   max(as_date(as.POSIXct(as.character(as.data.frame(inputData)[, k]), tz = "America/New_York",
                                                                           tryFormats = dateFormat)),
                                                                         na.rm = T), 
                                    by ="day"), n)
