@@ -128,7 +128,6 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
 
 
    names(simData) = names(inputData)
-  print(c(sum(is.na(simData[,1])), sum(is.na(simData[,4]))))
    return(data.frame(simData))
    
    }
