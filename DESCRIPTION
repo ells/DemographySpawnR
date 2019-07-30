@@ -24,4 +24,5 @@ Imports:
     MASS,
     dplyr,
     plyr,
-    fitdistrplus
+    fitdistrplus,
+    truncnorm
