@@ -89,7 +89,7 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
       
       
       # fitNormal  <- fitdist(c(na.omit(inputData[,i])), "norm", method = "mle")
-      #fitGamma   <- fitdist(c(na.omit(inputData[,i])), "gamma", method = "mle")
+      # fitGamma   <- fitdist(c(na.omit(inputData[,i])), "gamma", method = "mle")
       # fitLogNorm <- fitdist(abs(inputData[,i]), "lnorm", method = "mme")
       # fitWeibull <- fitdist(inputData[,i], "weibull", method = "mge")
       
