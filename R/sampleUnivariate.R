@@ -24,18 +24,40 @@
 #' sampleUnivariate()
 
 sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
-
+  
   simData = data.frame(matrix(nrow = n, ncol = ncol(inputData)))
   inputData = data.frame(inputData)
   ## getting distribution of each variable and randomly sampling from that to get new dataset
-
-
+  
+  possibleDates = which(sapply(inputData,
+                               function(x)
+                                 !all(is.na(as_date(as.character(x),
+                                                    format=dateFormat, tz = "America/New_York")))))
+  
+  possibleDates
+  
+  for (k in (unname(possibleDates))) {
+    
+    
+    simData[, k] = sample(seq(min(as_date(as.POSIXct(as.character(as.data.frame(inputData)[, k]), tz = "America/New_York", 
+                                                     tryFormats = dateFormat)), 
+                                  na.rm = T),
+                              max(as_date(as.POSIXct(as.character(as.data.frame(inputData)[, k]), tz = "America/New_York",
+                                                     tryFormats = dateFormat)),
+                                  na.rm = T), 
+                              by ="day"), n)
+    
+    names(simData)[k] = names(inputData)[k]
+  }
+  
+  
+  
   for (i in 1:ncol(inputData))  { # (1)
-
-
+    if (i %in% unname(possibleDates)) next
+    
     # if (any(str_detect(complete.cases(as.character(inputData[,i])), datePattern))) {
     #
-    #   dateFormatted = as.Date(as.character(inputData[,i]))
+    #   dateFormatted = as.Date(as.charaMcter(inputData[,i]))
     #
     #
     #   dates2 = sample(seq(min(dateFormatted, na.rm = T),
@@ -44,64 +66,38 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
     #   simData[,i] = dates2
     #
     # }
-
-     if (any(sapply(inputData[,i],
-                    function(x)
-                      !all(is.na(as_date(as.character(x),
-                                         format=dateFormat, tz = "America/New_York")))))) {
-                   # & nchar(inputData[min(which(!is.na(inputData[,i]))), i]) == 8) {
-
-       possibleDates = which(sapply(inputData[,i],
-                                    function(x)
-                                      !all(is.na(as_date(as.character(x),
-                                                         format=dateFormat, tz = "America/New_York")))))
-       
-       possibleDates
-
-         
-          
-       for (k in c(unname(possibleDates))) {
-         
+    
+    
+    
+    
+    
+    
+    if (length(unique(inputData[, i])) < 10 | all(is.factor(inputData[,i]))) {
       
-         simData[, k] = sample(seq(min(as_date(as.POSIXct(as.character(as.data.frame(inputData)[, k]), tz = "America/New_York", 
-                                                                          tryFormats = dateFormat)), 
-                                                                        na.rm = T),
-                                   max(as_date(as.POSIXct(as.character(as.data.frame(inputData)[, k]), tz = "America/New_York",
-                                                                          tryFormats = dateFormat)),
-                                                                        na.rm = T), 
-                                   by ="day"), n)
-         
-         names(simData)[k] = names(inputData)[k]
-       }
-       
-
-      } else if (all(is.na(inputData[,i])) |
-           (all(is.character(inputData[,i])) & length(unique(inputData[,i])) == nrow(inputData))) next
-
-            ### RETURNS NA's
-
-
-
-
-      else if (length(unique(inputData[,i])) < 10 | all(is.factor(inputData[,i]))) {
-
-          simData[,i] = sample(c(as.character(as.data.frame(table(inputData[,i], exclude = NULL))$Var1)), n, TRUE,
-                               prob = c(as.data.frame(table(inputData[,i], exclude = NULL))$Freq)
-                              )
-
-    } else if (any(na.omit(inputData[,i]) %% 1 == 0)) {
-
-
+      simData[,i] = sample(c(as.character(as.data.frame(table(inputData[,i], exclude = NULL))$Var1)), n, TRUE,
+                           prob = c(as.data.frame(table(inputData[,i], exclude = NULL))$Freq)
+      )
+      
+    }
+    else  if (all(is.na(inputData[,i])) |
+              (all(is.character(inputData[,i])) & length(unique(inputData[,i])) == nrow(inputData))) next
+    
+    ### RETURNS NA's
+    
+    
+    else if (any(na.omit(inputData[,i]) %% 1 == 0)) {
+      
+      
       # fitNormal  <- fitdist(c(na.omit(inputData[,i])), "norm", method = "mle")
       #fitGamma   <- fitdist(c(na.omit(inputData[,i])), "gamma", method = "mle")
       # fitLogNorm <- fitdist(abs(inputData[,i]), "lnorm", method = "mme")
       # fitWeibull <- fitdist(inputData[,i], "weibull", method = "mge")
-
-
+      
+      
       # listFits = list(fitNormal, fitGamma)#, fitWeibull)
       # 
       # fits = gofstat(listFits, fitnames=c("norm", "gamma"))#, "weibull"))
-
+      
       # simData[,i] = round(eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')'))))
@@ -111,18 +107,18 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
                                                   function(cc) cc[sample(c(NA, TRUE), 
                                                                          prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
                                                                          size = 1, replace = TRUE)]))))
-        }
+      }
       
-    else {
-      simData[, i] = round(rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
-      simData[, i] = t(unname(data.frame(lapply(simData[, i], 
-                                                           function(cc) cc[sample(c(NA, TRUE), 
-                                                                              prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
-                                                                                 size = 1, replace = TRUE)]))))
-    }
-   
+      else {
+        simData[, i] = round(rnorm(n, mean = mean(inputData[,i], na.rm = T), sd = sd(inputData[,i], na.rm = T)))
+        simData[, i] = t(unname(data.frame(lapply(simData[, i], 
+                                                  function(cc) cc[sample(c(NA, TRUE), 
+                                                                         prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
+                                                                         size = 1, replace = TRUE)]))))
+      }
+      
     } else {
-
+      
       # simData[,i] = eval(parse(text = paste0("r", names(which.min(fits$aic)), '(', 'n, ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[1]], ', ',
       #                              listFits[[which.min(fits$aic)[[1]]]][[1]][[2]], ')')))
@@ -131,13 +127,13 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
                                                 function(cc) cc[sample(c(NA, TRUE), 
                                                                        prob = c(sum(is.na(inputData[, i])), nrow(inputData)-sum(is.na(inputData[, i]))),
                                                                        size = 1, replace = TRUE)]))))
-          }
-
+    }
+    
   } #close big for loop (1)
-
-
-   names(simData) = names(inputData)
-   return(data.frame(simData))
-   
-   }
+  
+  
+  names(simData) = names(inputData)
+  return(data.frame(simData))
+  
+}
 
