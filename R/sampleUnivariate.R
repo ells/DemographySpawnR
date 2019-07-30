@@ -49,7 +49,7 @@ sampleUnivariate = function (inputData, n, dateFormat = "%Y%m%d") {
     
     names(simData)[k] = names(inputData)[k]
   }
-  
+  #
   
   
   for (i in 1:ncol(inputData))  { # (1)
